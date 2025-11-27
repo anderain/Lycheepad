@@ -1,0 +1,8 @@
+W*Dbg/
+W*Rel/
+x86emDbg/
+x86emRel/
+*.ncb
+*.opt
+*.plg
+requirements/

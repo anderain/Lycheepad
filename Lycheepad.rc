@@ -1,0 +1,196 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_LYCHEEPAD           ICON    DISCARDABLE     "Lycheepad.ICO"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDM_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "App List",                    IDM_FILE_APP
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_FILE_EXIT
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About",                      IDM_HELP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 125, 54
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "About Lycheepad"
+FONT 8, "Tahoma"
+BEGIN
+    ICON            IDI_LYCHEEPAD,IDC_STATIC,9,11,21,20
+    CONTROL         "Lycheepad 0.1",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX | WS_GROUP,40,8,81,8
+    LTEXT           "Copyright (C) 1995-2025",IDC_STATIC,40,35,119,8
+    LTEXT           "Kuki Himekawa",IDC_STATIC,40,22,50,8
+END
+
+IDD_APP_LIST DIALOG DISCARDABLE  0, 0, 120, 68
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Application List"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,90,53,26,12
+    PUSHBUTTON      "+",IDC_BTN_ADD,4,53,14,12
+    PUSHBUTTON      "-",IDC_BTN_REMOVE,21,53,13,12
+    LISTBOX         IDC_LIST_APP,4,4,113,46,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "^",IDC_BTN_MOVE_UP,37,53,14,12
+    PUSHBUTTON      "v",IDC_BTN_MOVE_DOWN,54,53,13,12
+END
+
+IDD_SELECT_EXE DIALOG DISCARDABLE  0, 0, 97, 73
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Executable ..."
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,35,57,28,12
+    PUSHBUTTON      "Cancel",IDCANCEL,65,57,27,12
+    PUSHBUTTON      "Select",IDC_BTN_SELECT,4,57,27,12
+    LTEXT           "Executable Path",IDC_STATIC,4,3,54,8
+    EDITTEXT        IDC_EDIT_EXE,4,13,88,12,ES_AUTOHSCROLL
+    LTEXT           "Label",IDC_STATIC,4,28,19,8
+    EDITTEXT        IDC_EDIT_LABEL,4,38,88,12,ES_AUTOHSCROLL
+END
+
+IDD_FOLDER_VIEWER DIALOG DISCARDABLE  0, 0, 113, 105
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Executable File"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,68,90,41,12
+    PUSHBUTTON      "Cancel",IDCANCEL,4,90,37,12
+    PUSHBUTTON      "Up",IDC_BTN_UP,4,3,21,12
+    EDITTEXT        IDC_EDIT_PATH,27,3,82,12,ES_AUTOHSCROLL
+    LISTBOX         IDC_LIST_FILES,4,20,105,67,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDC_LYCHEEPAD ACCELERATORS DISCARDABLE 
+BEGIN
+    "/",            IDM_HELP_ABOUT,         ASCII,  ALT, NOINVERT
+    VK_F4,          IDM_FILE_EXIT,          VIRTKEY, ALT, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SELECT_EXE, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 92
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 69
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_APP_TITLE           "Lycheepad"
+    IDS_HELLO               "Hello World!"
+    IDC_LYCHEEPAD           "LYCHEEPAD"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
