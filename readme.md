@@ -1,5 +1,7 @@
 # Lycheepad - Windows CE Palm-size PC Launcher
 
+<img src="./preview.webp" style="max-width: 400px; display: block; margin: 8px auto;">
+
 ## Overview
 
 Lycheepad is a custom application launcher designed specifically for legacy Windows CE Palm-size PC 2.01 devices. It provides an icon-based interface for quickly launching applications on these classic handheld devices.
