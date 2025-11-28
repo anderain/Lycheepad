@@ -68,40 +68,12 @@ static LRESULT CALLBACK AppListProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
                     {
                         int selected = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
                         if (selected != LB_ERR && selected > 0) {
-                            // Find the corresponding slots
-                            TCHAR label1[40], label2[40];
-                            int i;
-                            APPSLOT* slot1 = NULL;
-                            APPSLOT* slot2 = NULL;
-
-                            SendMessage(hListBox, LB_GETTEXT, selected, (LPARAM)label1);
-                            SendMessage(hListBox, LB_GETTEXT, selected - 1, (LPARAM)label2);
-                            
-                            // Find slots in AppSlots array
-                            
-                            for (i = 0; i < NUM_BTN_SLOTS; i++) {
-                                if (_tcscmp(pAppSlots[i].szLabel, label1) == 0) {
-                                    slot1 = &pAppSlots[i];
-                                }
-                                if (_tcscmp(pAppSlots[i].szLabel, label2) == 0) {
-                                    slot2 = &pAppSlots[i];
-                                }
-                                if (slot1 && slot2) break;
-                            }
-                            
-                            if (slot1 && slot2) {
-                                // Swap the two slots
-                                APPSLOT temp = *slot1;
-                                *slot1 = *slot2;
-                                *slot2 = temp;
-                                
-                                // Update list box
-                                SendMessage(hListBox, LB_DELETESTRING, selected, 0);
-                                SendMessage(hListBox, LB_DELETESTRING, selected - 1, 0);
-                                SendMessage(hListBox, LB_INSERTSTRING, selected - 1, (LPARAM)label1);
-                                SendMessage(hListBox, LB_INSERTSTRING, selected, (LPARAM)label2);
-                                SendMessage(hListBox, LB_SETCURSEL, selected - 1, 0);
-                            }
+                            APPSLOT tempSlot;
+                            memcpy(&tempSlot, pAppSlots + selected, sizeof(APPSLOT));
+                            memcpy(pAppSlots + selected, pAppSlots + selected - 1, sizeof(APPSLOT));
+                            memcpy(pAppSlots + selected - 1, &tempSlot, sizeof(APPSLOT));
+                            RefreshAppList();;
+                            SendMessage(hListBox, LB_SETCURSEL, selected - 1, 0);
                         }
                     }
                     break;
@@ -111,40 +83,12 @@ static LRESULT CALLBACK AppListProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
                         int selected = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
                         int count = SendMessage(hListBox, LB_GETCOUNT, 0, 0);
                         if (selected != LB_ERR && selected < count - 1) {
-                            // Find the corresponding slots
-                            TCHAR label1[40], label2[40];
-                            int i;
-                            APPSLOT* slot1 = NULL;
-                            APPSLOT* slot2 = NULL;
-
-                            SendMessage(hListBox, LB_GETTEXT, selected, (LPARAM)label1);
-                            SendMessage(hListBox, LB_GETTEXT, selected + 1, (LPARAM)label2);
-                            
-                            // Find slots in AppSlots array
-                            
-                            for (i = 0; i < NUM_BTN_SLOTS; i++) {
-                                if (_tcscmp(pAppSlots[i].szLabel, label1) == 0) {
-                                    slot1 = &pAppSlots[i];
-                                }
-                                if (_tcscmp(pAppSlots[i].szLabel, label2) == 0) {
-                                    slot2 = &pAppSlots[i];
-                                }
-                                if (slot1 && slot2) break;
-                            }
-                            
-                            if (slot1 && slot2) {
-                                // Swap the two slots
-                                APPSLOT temp = *slot1;
-                                *slot1 = *slot2;
-                                *slot2 = temp;
-                                
-                                // Update list box
-                                SendMessage(hListBox, LB_DELETESTRING, selected, 0);
-                                SendMessage(hListBox, LB_DELETESTRING, selected, 0);
-                                SendMessage(hListBox, LB_INSERTSTRING, selected, (LPARAM)label2);
-                                SendMessage(hListBox, LB_INSERTSTRING, selected + 1, (LPARAM)label1);
-                                SendMessage(hListBox, LB_SETCURSEL, selected + 1, 0);
-                            }
+                            APPSLOT tempSlot;
+                            memcpy(&tempSlot, pAppSlots + selected, sizeof(APPSLOT));
+                            memcpy(pAppSlots + selected, pAppSlots + selected + 1, sizeof(APPSLOT));
+                            memcpy(pAppSlots + selected + 1, &tempSlot, sizeof(APPSLOT));
+                            RefreshAppList();
+                            SendMessage(hListBox, LB_SETCURSEL, selected + 1, 0);
                         }
                     }
                     break;
