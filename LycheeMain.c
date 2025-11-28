@@ -270,7 +270,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             int i, n = 20;
             int r1 = 30, g1 = 144, b1 = 255;
             int r2 = 0, g2 = 255, b2 = 128;
-            int height, stepH;
+            int height;
 
             GetClientRect(hWnd, &rc);
     
