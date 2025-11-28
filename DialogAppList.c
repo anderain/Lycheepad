@@ -35,7 +35,7 @@ static LRESULT CALLBACK AppListProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
                     break;
                     
                 case IDC_BTN_ADD:
-                    if (ShowDialogSelectExe(hLocalInst, hDlg) == IDOK) {
+                    if (ShowDialogSelectExe(hLocalInst, hDlg, NULL) == IDOK) {
                         RefreshAppList();
                     }
                     break;
@@ -144,6 +144,29 @@ static LRESULT CALLBACK AppListProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
                                 SendMessage(hListBox, LB_INSERTSTRING, selected, (LPARAM)label2);
                                 SendMessage(hListBox, LB_INSERTSTRING, selected + 1, (LPARAM)label1);
                                 SendMessage(hListBox, LB_SETCURSEL, selected + 1, 0);
+                            }
+                        }
+                    }
+                    break;
+                    
+                case IDC_LIST_APP:
+                    if (HIWORD(wParam) == LBN_DBLCLK) {
+                        int selected = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+                        if (selected != LB_ERR) {
+                            int i;
+                            // Edit the selected app
+                            TCHAR szLabel[40];
+                            SendMessage(hListBox, LB_GETTEXT, selected, (LPARAM)szLabel);
+                            
+                            // Find the corresponding slot
+                            for (i = 0; i < NUM_BTN_SLOTS; i++) {
+                                if (_tcscmp(pAppSlots[i].szLabel, szLabel) == 0) {
+                                    // Show the select exe dialog with existing data
+                                    if (ShowDialogSelectExe(hLocalInst, hDlg, &pAppSlots[i]) == IDOK) {
+                                        RefreshAppList();
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }

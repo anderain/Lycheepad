@@ -48,11 +48,25 @@ static BOOL AddAppToSlot(LPCTSTR szPath, LPCTSTR szLabel) {
 }
 
 static LRESULT CALLBACK SelectExeProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
+    static APPSLOT* pEditingSlot = NULL;
+    
     switch (message) {
         case WM_INITDIALOG:
             CenterDialog(hDlg);
             hEditExe = GetDlgItem(hDlg, IDC_EDIT_EXE);
             hEditLabel = GetDlgItem(hDlg, IDC_EDIT_LABEL);
+            
+            // Check if we're in edit mode (lParam contains pointer to APPSLOT)
+            if (lParam != NULL) {
+                pEditingSlot = (APPSLOT*)lParam;
+                SetWindowLong(hDlg, GWL_USERDATA, (LONG)lParam);
+            
+                if (pEditingSlot != NULL) {
+                    // Set existing data for editing
+                    SetWindowText(hEditExe, pEditingSlot->szPath);
+                    SetWindowText(hEditLabel, pEditingSlot->szLabel);
+                }
+            }
             return TRUE;
 
         case WM_COMMAND:
@@ -70,10 +84,38 @@ static LRESULT CALLBACK SelectExeProc(HWND hDlg, UINT message, WPARAM wParam, LP
                         } else if (_tcslen(szLabel) == 0) {
                             MessageBox(hDlg, _T("Please enter a label for the application."), _T("Error"), MB_OK | MB_ICONERROR);
                         } else {
-                            if (AddAppToSlot(szPath, szLabel)) {
+                            pEditingSlot = (APPSLOT*)GetWindowLong(hDlg, GWL_USERDATA);
+                            
+                            if (pEditingSlot != NULL) {
+                                // Edit mode: update existing slot
+                                if (pEditingSlot->szPath != NULL) {
+                                    LocalFree(pEditingSlot->szPath);
+                                }
+                                
+                                // Allocate new memory for path
+                                pEditingSlot->szPath = (TCHAR*)LocalAlloc(LPTR, (_tcslen(szPath) + 1) * sizeof(TCHAR));
+                                if (pEditingSlot->szPath == NULL) {
+                                    MessageBox(hDlg, _T("Memory allocation failed."), _T("Error"), MB_OK | MB_ICONERROR);
+                                    break;
+                                }
+                                
+                                _tcscpy(pEditingSlot->szPath, szPath);
+                                _tcscpy(pEditingSlot->szLabel, szLabel);
+                                
+                                // Update icon
+                                if (pEditingSlot->hIcon) {
+                                    DestroyIcon(pEditingSlot->hIcon);
+                                }
+                                pEditingSlot->hIcon = ExtractIconFromExe(szPath);
+                                
                                 EndDialog(hDlg, LOWORD(wParam));
                             } else {
-                                MessageBox(hDlg, _T("No empty slots available."), _T("Error"), MB_OK | MB_ICONERROR);
+                                // Add mode: add new slot
+                                if (AddAppToSlot(szPath, szLabel)) {
+                                    EndDialog(hDlg, LOWORD(wParam));
+                                } else {
+                                    MessageBox(hDlg, _T("No empty slots available."), _T("Error"), MB_OK | MB_ICONERROR);
+                                }
                             }
                         }
                     }
@@ -118,7 +160,7 @@ static LRESULT CALLBACK SelectExeProc(HWND hDlg, UINT message, WPARAM wParam, LP
     return FALSE;
 }
 
-int ShowDialogSelectExe(HINSTANCE hInst, HWND hWnd) {
+int ShowDialogSelectExe(HINSTANCE hInst, HWND hWnd, APPSLOT* pAppSlot) {
     hLocalInst = hInst;
-    return DialogBox(hInst, (LPCTSTR)IDD_SELECT_EXE, hWnd, (DLGPROC)SelectExeProc);
+    return DialogBoxParam(hInst, (LPCTSTR)IDD_SELECT_EXE, hWnd, (DLGPROC)SelectExeProc, (LPARAM)pAppSlot);
 }
