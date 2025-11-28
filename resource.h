@@ -22,6 +22,7 @@
 #define IDC_BTN_UP                      1009
 #define IDC_LIST_FILES                  1010
 #define IDC_EDIT_PATH                   1011
+#define IDC_LIST_FOLDERS                1012
 #define IDM_FILE_EXIT                   40002
 #define IDM_HELP_ABOUT                  40003
 #define IDM_FILE_APP                    40004
